@@ -30,11 +30,6 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
         try {
-            String jwtToken = request.getHeader(JwtTokenUtils.HEADER)
-                    .replace(JwtTokenUtils.PREFIX, "");
-            if (invalidTokenService.isTokenStoredAsInvalid(jwtToken)) {
-                throw new UserNotAuthenticatedException();
-            }
 
             if (checkJWTToken(request)) {
                 Claims claims = validateToken(request);
@@ -57,7 +52,15 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     private boolean checkJWTToken(HttpServletRequest request) {
         String authenticationHeader = request.getHeader(JwtTokenUtils.HEADER);
-        return authenticationHeader != null && authenticationHeader.startsWith(JwtTokenUtils.PREFIX);
+        if (authenticationHeader == null) {
+            return false;
+        }
+
+        String jwtToken = authenticationHeader.replace(JwtTokenUtils.PREFIX, "");
+        if (invalidTokenService.isTokenStoredAsInvalid(jwtToken)) {
+            throw new UserNotAuthenticatedException();
+        }
+        return authenticationHeader.startsWith(JwtTokenUtils.PREFIX);
     }
 
     private Claims validateToken(HttpServletRequest request) {

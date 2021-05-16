@@ -65,6 +65,8 @@ public class LeaveRequestController {
     private void sendEmailForStatusChange(LeaveRequest leaveRequest, String authorizationHeader) {
         String jwtToken = authorizationHeader.replace(JwtTokenUtils.PREFIX, "");
         String usernameFromToken = JwtTokenUtils.getUsernameFromToken(jwtToken);
+        // Repository returns Optional
+        // user Optional Wrapper in order to avoid getting null with all its exceptions
         Optional<User> userOptional = userService.findUserByUsername(usernameFromToken);
 
         try {

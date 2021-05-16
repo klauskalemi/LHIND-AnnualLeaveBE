@@ -18,7 +18,7 @@ public class EmailFluentBuilder implements IEmailFrom, IEmailTo, IEmailSubject, 
     public static IEmailFrom getNewInstance(){
         return new EmailFluentBuilder();
     }
-
+    
     @Override
     public IEmailTo setFrom(String from) {
         emailInfo.setFrom(from);

@@ -28,6 +28,7 @@ public class EmailService implements IEmailService {
         String bcc = emailInfo.getBCC();
         String cc = emailInfo.getCC();
 
+        //Spring Object, receives the mail
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 
         if (from != null && !from.trim().isEmpty()) {

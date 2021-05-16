@@ -1,6 +1,8 @@
 package com.lhind.annualleave.services.email.builder;
 
 public final class EmailInfo {
+
+    // Encapsulation
     private String from;
     private String to;
     private String subject;
@@ -8,6 +10,8 @@ public final class EmailInfo {
     private String bcc;
     private String cc;
 
+    // empty constructor, self-generated , package private , default access modifier
+    //prevents direct creation from constructor, uses fluentbuilder
     EmailInfo() {
     }
 
